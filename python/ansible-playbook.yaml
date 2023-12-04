@@ -1,5 +1,3 @@
----
-
 - name: Install PostgreSQL and Redis using Helm
   hosts: localhost
   gather_facts: false
@@ -37,6 +35,5 @@
         values:
           auth.password: "{{ redis_password }}"
 
----
 
 
