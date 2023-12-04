@@ -27,7 +27,7 @@ cursor_postgres = conn_postgres.cursor()
 cursor_postgres.execute("CREATE TABLE IF NOT EXISTS clients (client_id SERIAL PRIMARY KEY, client_url VARCHAR(255) NOT NULL)")
 
 # Connexion à Redis
-conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'), decode_responses=True)
+conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'),password=os.getenv('REDIS_PASSWORD'), decode_responses=True)
 
 @app.route('/api/visits', methods=['POST'])
 @request_processing_time.time()
