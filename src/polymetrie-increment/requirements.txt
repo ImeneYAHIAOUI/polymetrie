@@ -1,0 +1,8 @@
+flask
+psycopg2-binary
+sqlalchemy
+psutil
+prometheus_client
+load_dotenv
+redis
+virtualenv
