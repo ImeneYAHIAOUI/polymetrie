@@ -1,0 +1,44 @@
+- name: Playbook
+  hosts: localhost
+
+  vars: 
+    pip_package: python3-pip
+    pip_executable: pip3
+
+  
+  tasks:
+
+    - name : create polymetrie-increment namespace
+      kubernetes.core.k8s:
+        state: present
+        api_version: v1
+        kind: Namespace
+        name: polymetrie-increment
+        
+    - name: Add bitnami Helm repository
+      command: helm repo add bitnami https://charts.bitnami.com/bitnami
+      ignore_errors: yes  # Ignore errors in case the repo is already added
+
+    - name: Deploy latest version of Redis chart inside polymetrie namespace (and create it)
+      kubernetes.core.helm:
+        name: redis
+        chart_ref: bitnami/redis
+        release_namespace: polymetrie-increment
+        create_namespace: true
+
+    - name: Deploy postgres chart inside polymetrie namespace (and create it)
+      kubernetes.core.helm:
+        name: postgres
+        chart_ref: bitnami/postgresql
+        release_namespace: polymetrie-increment
+        create_namespace: true
+        values:
+          postgresqlDatabase: polymetrie
+          postgresqlUsername: polymetrie
+          postgresqlPassword: polymetrie
+
+    - name: Deploy polymetrie application
+      kubernetes.core.k8s:
+        state: present
+        src: ../deployment.yml
+
