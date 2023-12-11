@@ -1,0 +1,22 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub, Build and Push Docker image
+      run: |
+        cd src/python
+        # Login to Docker Hub
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build -t nadimbenaissa/polymetrie-increment:latest .
+        docker push nadimbenaissa/polymetrie-increment:latest
