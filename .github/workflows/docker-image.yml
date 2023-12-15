@@ -17,5 +17,5 @@ jobs:
       run: |
         cd src/python
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build --debug -t hamza125/polymetrie-increment:latest .
-        docker push --debug hamza125/polymetrie-increment:latest
+        docker build -t hamza125/polymetrie-increment:latest .
+        docker push hamza125/polymetrie-increment:latest
