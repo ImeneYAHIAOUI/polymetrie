@@ -5,4 +5,10 @@ metadata:
   namespace: argocd
   labels:
     app: argocd
-spec: {}
+spec:
+  server:
+    host: argocd.orch-team-g.pns-projects.fr.eu.org
+    ingress:
+      ingressClassName: nginx
+      enabled: true
+    insecure: true
