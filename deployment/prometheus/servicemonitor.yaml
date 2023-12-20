@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: polymetrie
+  name: polymetrie-sm
+  namespace: default
+spec:
+  endpoints:
+  - interval: 30s
+    port: http
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app: polymetrie
+      app.kubernetes.io/instance: polymetrie
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: polymetrie-chart
+      app.kubernetes.io/version: 1.16.0
+      helm.sh/chart: polymetrie-chart-0.1.0

@@ -13,7 +13,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: polymetrie-increment-service
+                name: polymetrie-polymetrie-chart
                 port:
                   number: 5000
 
