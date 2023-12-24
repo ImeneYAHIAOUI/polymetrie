@@ -4,7 +4,7 @@ metadata:
   labels:
     app: polymetrie
   name: polymetrie-service-monitor
-  namespace: default
+  namespace: monitoring
 spec:
   endpoints:
   - interval: 30s
