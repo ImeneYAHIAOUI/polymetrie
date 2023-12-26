@@ -1,8 +1,12 @@
 terraform {
   required_providers {
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = ">= 2.0.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.3.0"
     }
   }
 }
@@ -11,16 +15,33 @@ provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
-resource "kubernetes_namespace" "polymetrie-increment" {
-  metadata {
-    name = "polymetrie-increment"
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
   }
 }
 
-resource "kubernetes_deployment" "polymetrie-increment" {
+resource "kubernetes_namespace" "polymetrie-increment-teamg" {
   metadata {
-    name = "polymetrie-increment"
-    namespace = kubernetes_namespace.polymetrie-increment.metadata[0].name
+    name = "terraform"
+  }
+}
+
+resource "helm_release" "postgresql" {
+  name      = "my-postgresql"
+  namespace = kubernetes_namespace.polymetrie-increment-teamg.metadata[0].name
+  repository = "https://charts.bitnami.com/bitnami"
+  chart     = "postgresql"
+  version   = "13.2.24"
+  values    = [file("../charts/values/postgres/values-postgres.yaml")]
+}
+
+resource "kubernetes_deployment" "polymetrie-increment-teamg" {
+  depends_on = [helm_release.postgresql]
+
+  metadata {
+    name      = "polymetrie-increment"
+    namespace = kubernetes_namespace.polymetrie-increment-teamg.metadata[0].name
   }
 
   spec {
@@ -38,7 +59,7 @@ resource "kubernetes_deployment" "polymetrie-increment" {
       }
       spec {
         container {
-          name = "polymetrie-increment"
+          name  = "polymetrie-increment"
           image = "hamza125/polymetrie-increment:latest"
           port {
             container_port = 5000
@@ -49,10 +70,11 @@ resource "kubernetes_deployment" "polymetrie-increment" {
   }
 }
 
-resource "kubernetes_service" "polymetrie-increment" {
+resource "kubernetes_service" "polymetrie-increment-teamg" {
+
   metadata {
-    name = "polymetrie-increment-service"
-    namespace = kubernetes_namespace.polymetrie-increment.metadata[0].name
+    name      = "polymetrie-increment-service"
+    namespace = kubernetes_namespace.polymetrie-increment-teamg.metadata[0].name
   }
 
   spec {
@@ -60,31 +82,9 @@ resource "kubernetes_service" "polymetrie-increment" {
       app = "polymetrie-increment"
     }
     port {
-      protocol = "TCP"
-      port = 5000
+      protocol    = "TCP"
+      port        = 5000
       target_port = 5000
-    }
-  }
-}
-
-resource "kubernetes_ingress" "polymetrie-increment" {
-  metadata {
-    name = "polymetrie-increment-ingress"
-    namespace = kubernetes_namespace.polymetrie-increment.metadata[0].name
-  }
-
-  spec {
-    rule {
-      host = "polymetrie-increment.com"
-      http {
-        path {
-          path = "/"
-          backend {
-            service_name = kubernetes_service.polymetrie-increment.metadata[0].name
-            service_port = kubernetes_service.polymetrie-increment.spec[0].port[0].port
-          }
-        }
-      }
     }
   }
 }
