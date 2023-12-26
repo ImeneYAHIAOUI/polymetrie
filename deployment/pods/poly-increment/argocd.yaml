@@ -11,4 +11,7 @@ spec:
     ingress:
       ingressClassName: nginx
       enabled: true
-    insecure: true
+  syncPolicy:
+    automated:
+      prune: true
+  insecure: true
