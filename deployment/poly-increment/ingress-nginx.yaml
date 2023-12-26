@@ -6,7 +6,7 @@ metadata:
   name: polymetrie
 spec:
   rules:
-    - host: polymetrie.example.com  # Remplacez "votrehote.com" par votre hôte
+    - host: polymetrie.teamg.com 
       http:
         paths:
           - path: /
