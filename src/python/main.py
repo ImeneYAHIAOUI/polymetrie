@@ -32,6 +32,8 @@ conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('RED
 @app.route('/api/visits', methods=['POST'])
 @request_processing_time.time()
 def track_visit():
+    http_calls_total.labels(endpoint='/api/visits').inc()
+
     data = request.json  # Récupérer les données JSON envoyées
 
     # Vérifier si le client est enregistré dans la base de données PostgreSQL
@@ -59,6 +61,7 @@ def track_visit():
 ## do a route to fill the database with the clients
 @app.route('/api/clients', methods=['POST'])
 def add_client():
+    http_calls_total.labels(endpoint='/api/clients').inc()
     client_urls = [
         "https://polytech.univ-cotedazur.fr",
         "www.google.com",
@@ -81,6 +84,7 @@ def add_client():
 
 @app.route('/api/fetch-db', methods=['GET'])
 def fetch_db():
+    http_calls_total.labels(endpoint='/api/fetch-db').inc()
     cursor_postgres.execute("SELECT * FROM clients")
     clients = cursor_postgres.fetchall()
 
@@ -89,6 +93,7 @@ def fetch_db():
 
 @app.route('/api/fetch-redis', methods=['GET'])
 def fetch_redis():
+    http_calls_total.labels(endpoint='/api/fetch-redis').inc()
     ## print keys and values
     keys = conn_redis.keys()
     values = conn_redis.mget(keys)
