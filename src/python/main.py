@@ -4,7 +4,7 @@ import redis
 from dotenv import load_dotenv
 from prometheus_client import Counter, Histogram, generate_latest, REGISTRY, Gauge
 import os
-
+import time
 app = Flask(__name__)
 
 load_dotenv()
@@ -33,6 +33,7 @@ conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('RED
 @request_processing_time.time()
 def track_visit():
     http_calls_total.labels(endpoint='/api/visits').inc()
+    start_time = time.time() 
 
     data = request.json  # Récupérer les données JSON envoyées
 
@@ -51,11 +52,19 @@ def track_visit():
 
     if res:
         # Si le client est enregistré, incrémenter le compteur de visite dans Redis
+        
+
         page_url = client_url 
         conn_redis.incr(page_url)  # Incrémentation du compteur pour cette page
+        processing_time = time.time() - start_time
+        request_processing_time.observe(processing_time)
         return jsonify({'message': 'Visite enregistrée avec succès'})
     else:
+        processing_time = time.time() - start_time
+        request_processing_time.observe(processing_time)
         return jsonify({'message': 'Client non autorisé'}), 403  # Accès interdit
+    
+    
 
 
 ## do a route to fill the database with the clients
