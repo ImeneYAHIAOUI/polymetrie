@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build . -t myapp
+docker build . -t polymetrie-increment
