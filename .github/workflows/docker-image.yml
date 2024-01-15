@@ -15,7 +15,7 @@ jobs:
 
     - name: Login to Docker Hub, Build and Push Docker image
       run: |
-        cd src/python
+        cd src/polymetrie
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker build -t hamza125/polymetrie-increment:latest .
         docker push hamza125/polymetrie-increment:latest
