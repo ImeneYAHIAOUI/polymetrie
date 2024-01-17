@@ -986,7 +986,7 @@ grafana:
     ## Must be provided if Ingress is enable.
     ##
     hosts:
-       - grafana.team-g.com
+       - grafana.orch-team-g.pns-projects.fr.eu.org
     #hosts: []
 
     ## Path for grafana ingress
@@ -3030,7 +3030,7 @@ prometheus:
     ## Must be provided if Ingress is enabled.
     ##
     hosts:
-      - "prometheus.team-g.com"
+      - "prometheus.orch-team-g.pns-projects.fr.eu.org"
     #hosts: []
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix

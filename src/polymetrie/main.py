@@ -45,8 +45,10 @@ def track_visit():
     
     res = False
     for row in client:
-        print(row[1])
-        print(client_url)
+        
+        print(f"row [1] : {row[1]}")
+        print(f"client url {client_url}")
+        
         if row[1] in  client_url  :
             res = True
 
@@ -88,6 +90,7 @@ def add_client():
         # Insert the client URL into the PostgreSQL database
         cursor_postgres.execute("INSERT INTO clients (client_url) VALUES (%s)", (url,))
         conn_postgres.commit()  # Commit the changes to the database
+        
 
     return jsonify({'message': 'Clients added successfully'})
 
