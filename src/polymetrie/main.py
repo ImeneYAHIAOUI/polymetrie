@@ -88,6 +88,7 @@ def add_client():
         # Insert the client URL into the PostgreSQL database
         cursor_postgres.execute("INSERT INTO clients (client_url) VALUES (%s)", (url,))
         conn_postgres.commit()  # Commit the changes to the database
+        
 
     return jsonify({'message': 'Clients added successfully'})
 
