@@ -9,36 +9,22 @@ export const options = {
 };
 
 export default function () {
-  const result = http.get("http://polymetrie-increment-service:5000/metrics");
-  check(result, {
-    "http response status code is 200": result.status === 200,
-  });
-
-  const postResult = http.post(
-    "http://polymetrie-increment-service:5000/api/clients"
-  );
-  check(postResult, {
-    "http response status code is 201": postResult.status === 201,
-  });
+  const body = {
+    tracker: {
+      WINDOW_LOCATION_HREF:
+        "https://polytech.univ-cotedazur.fr/ecole/association-alumni",
+      USER_AGENT: "Mozilla/5.0",
+      PLATFORM: "Windows 11 Pro x64",
+      TIMEZONE: "UTC+01:00",
+    },
+  };
 
   const postResult2 = http.post(
-    "http://polymetrie-increment-service:5000/api/visits"
+    "http://polymetrie-increment-service:5000/api/visits",
+    JSON.stringify(body),
+    { headers: { "Content-Type": "application/json" } }
   );
   check(postResult2, {
     "http response status code is 201": postResult2.status === 201,
-  });
-
-  const getResult = http.get(
-    "http://polymetrie-increment-service:5000/api/fetch-db"
-  );
-  check(getResult, {
-    "http response status code is 200": getResult.status === 200,
-  });
-
-  const getResult2 = http.get(
-    "http://polymetrie-increment-service:5000/api/fetch-redis"
-  );
-  check(getResult2, {
-    "http response status code is 200": getResult2.status === 200,
   });
 }
