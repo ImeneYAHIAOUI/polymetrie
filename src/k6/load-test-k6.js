@@ -20,7 +20,7 @@ export default function () {
   };
 
   const postResult2 = http.post(
-    "http://polymetrie-increment-service:5000/api/visits",
+    "http://polymetrie-polymetrie-chart:5000/api/visits",
     JSON.stringify(body),
     { headers: { "Content-Type": "application/json" } }
   );
