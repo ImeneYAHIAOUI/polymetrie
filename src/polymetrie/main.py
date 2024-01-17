@@ -57,7 +57,7 @@ def track_visit():
         page_url = client_url 
         conn_redis.incr(page_url)  # Incrémentation du compteur pour cette page
         processing_time = time.time() - start_time
-        request_processing_time.observe(processing_time)
+        
         return jsonify({'message': 'Visite enregistrée avec succès'})
     else:
         processing_time = time.time() - start_time
