@@ -45,8 +45,10 @@ def track_visit():
     
     res = False
     for row in client:
-        print(row[1])
-        print(client_url)
+        
+        print(f"row [1] : {row[1]}")
+        print(f"client url {client_url}")
+        
         if row[1] in  client_url  :
             res = True
 
