@@ -9,8 +9,8 @@ import atexit
 
 app = Flask(__name__)
 
-# Chargez les variables d'environnement depuis le fichier .env
 load_dotenv()
+service_up = Gauge('service_up', 'Whether the service is up or not')
 
 # Initialisez le middleware PrometheusMetrics
 metrics = PrometheusMetrics(app)
