@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 from prometheus_client import Counter, Histogram, generate_latest, REGISTRY, Gauge
 import os
 import time
+import atexit
+
 app = Flask(__name__)
 
 load_dotenv()
-
+service_up = Gauge('service_up', 'Whether the service is up or not')
 postgres_db_connections = Counter('postgres_db_connections', 'Number of connections to PostgreSQL database')
 redis_db_connections = Counter('redis_db_connections', 'Number of connections to Redis database')
 http_calls_total = Counter('http_calls_total', 'Total number of HTTP calls made on the webservice', ['endpoint'])
@@ -121,5 +123,11 @@ def metrics():
     # Collect and return Prometheus metrics
     return generate_latest(REGISTRY)
 
+def shutdown_hook():
+    service_up.set(0)
+    
+atexit.register(shutdown_hook)
+
 if __name__ == '__main__':
+    service_up.set(1)  # Set the 'up' metric to 1
     app.run(host='0.0.0.0', port=5000)
