@@ -97,5 +97,10 @@ def fetch_redis():
     ## return a list of tuples (key, value)
     return jsonify({'visits': list(zip(keys, values))})
 
+def shutdown_hook():
+    service_up.set(0)
+
+atexit.register(shutdown_hook)
 if __name__ == '__main__':
+    service_up.set(1)  # Set the 'up' metric to 1
     app.run(host='0.0.0.0', port=5000)
