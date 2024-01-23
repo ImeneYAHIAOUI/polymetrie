@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 load_dotenv()
 
+postgres_db_connections = Counter('postgres_db_connections', 'Number of connections to PostgreSQL database')
+redis_db_connections = Counter('redis_db_connections', 'Number of connections to Redis database')
 http_calls_total = Counter('http_calls_total', 'Total number of HTTP calls made on the webservice', ['endpoint'])
 request_processing_time = Histogram('requests_processing_time', 'Processing time of requests')
 memory_usage = Gauge('memory_usage', 'Memory usage of the webservice')
@@ -58,6 +60,7 @@ def track_visit():
 
         page_url = client_url 
         conn_redis.incr(page_url)  # Incrémentation du compteur pour cette page
+        redis_db_connections.inc()
         processing_time = time.time() - start_time
         request_processing_time.observe(processing_time)
         return jsonify({'message': 'Visite enregistrée avec succès'})
@@ -90,6 +93,7 @@ def add_client():
         # Insert the client URL into the PostgreSQL database
         cursor_postgres.execute("INSERT INTO clients (client_url) VALUES (%s)", (url,))
         conn_postgres.commit()  # Commit the changes to the database
+        postgres_db_connections.inc()
         
 
     return jsonify({'message': 'Clients added successfully'})
