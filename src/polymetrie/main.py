@@ -35,6 +35,7 @@ conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('RED
 @app.route('/api/visits', methods=['POST'])
 @metrics.summary('request_processing_time', 'Processing time of requests')
 @metrics.counter('number_https_calls', 'Number of http calls')
+@metrics.counter('redis_connections', 'Number of redis connections')
 def track_visit():
     data = request.json  # Récupérer les données JSON envoyées
 
@@ -58,6 +59,8 @@ def track_visit():
 
 ## do a route to fill the database with the clients
 @app.route('/api/clients', methods=['POST'])
+@metrics.counter('postgres_connections', 'Number of postgres connections')
+
 def add_client():
     client_urls = [
         "https://polytech.univ-cotedazur.fr",
