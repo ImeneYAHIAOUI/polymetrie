@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_client import Counter, Histogram, generate_latest, REGISTRY, Gauge
 import psycopg2
 import redis
 from dotenv import load_dotenv
