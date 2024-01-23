@@ -33,7 +33,7 @@ conn_redis = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('RED
 
 @app.route('/api/visits', methods=['POST'])
 @metrics.summary('request_processing_time', 'Processing time of requests')
-@metrics.count('number_https_calls', 'Number of http calls')
+@metrics.counter('number_https_calls', 'Number of http calls')
 def track_visit():
     data = request.json  # Récupérer les données JSON envoyées
 
