@@ -9,5 +9,5 @@ This repository contains the source code of the polymetrie application along wit
 * kubectl: Kubernetes command-line tool.
 
 * Helm: Kubernetes package manager.
-## polymetrie helm chart
+## Polymetrie helm chart
 you can find [here](https://github.com/sourour9/Helm-Chart-Polymetrie/tree/main) the Helm Chart for deploying the polymetrie application.
