@@ -10,4 +10,4 @@ This repository contains the source code of the Polymetry application along with
 
 * Helm: Kubernetes package manager.
 ## polymetrie helm chart
-you can find (here)[https://github.com/sourour9/Helm-Chart-Polymetrie/tree/main] the Helm Chart for deploying the Polymetry application.
+you can find [here](https://github.com/sourour9/Helm-Chart-Polymetrie/tree/main) the Helm Chart for deploying the Polymetry application.
