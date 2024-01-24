@@ -13,6 +13,6 @@ This repository contains the source code of the polymetrie application along wit
 you can find [here](https://github.com/sourour9/Helm-Chart-Polymetrie/tree/main) the Helm Chart for deploying the polymetrie application.
 
 ## Polymetrie image docker 
-The latest Docker image for the Polymetry application is hosted on Docker Hub. You can find the image and its corresponding tags at the following link:
+The latest Docker image for the Polymetrie application is hosted on Docker Hub. You can find the image and its corresponding tags at the following link:
 
 [Docker Hub - Polymetrie Application](https://hub.docker.com/r/hamza125/polymetrie-increment/tags)
