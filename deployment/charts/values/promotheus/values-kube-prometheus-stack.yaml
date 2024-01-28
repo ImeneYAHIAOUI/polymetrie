@@ -929,7 +929,7 @@ grafana:
   namespaceOverride: ""
   persistence:
     enabled: true 
-    storageClassName: "csi-cinder-high-speed"
+    storageClassName: "csi-cinder-classic"
     accessModes: ["ReadWriteOnce"]
     size: 1Gi 
 
@@ -3173,7 +3173,7 @@ prometheus:
     storageSpec: 
       volumeClaimTemplate:
         spec:
-          storageClassName: "csi-cinder-high-speed"
+          storageClassName: "csi-cinder-classic"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
