@@ -19,18 +19,24 @@ The latest Docker image for the Polymetrie application is hosted on Docker Hub. 
 
 ## Polymetrie Grafana Dashboard
 You can find [here](https://grafana.orch-team-g.pns-projects.fr.eu.org/d/c71bf583-d634-4274-83a4-0d2146db3f75/polymetrie-dashboard?orgId=1) a Grafana dashboard that display system and business metrics.
+
 user : admin
+
 password: teamg
 
 ## Polymetrie ArgoCD
 You can find [here](https://argocd.orch-team-g.pns-projects.fr.eu.org/login?return_url=https%3A%2F%2Fargocd.orch-team-g.pns-projects.fr.eu.org%2Fapplications) our ArgoCD web user interface.
+
 user : admin 
+
 password : bCStMcxRHezrhwZ1A2q0Uy3BPm9QXLGs
 
 
 ## Polymetrie Kibana
 You can find [here](https://kibana.orch-team-g.pns-projects.fr.eu.org/app/home) our Kibana web user interface.
+
 user : elastic
+
 command to get password : `kubectl get secret elastic-cluster-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' -n elastic-cluster`
 
 
