@@ -37,6 +37,6 @@ You can find [here](https://kibana.orch-team-g.pns-projects.fr.eu.org/app/home) 
 
 user : elastic
 
-command to get password : `kubectl get secret elastic-cluster-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' -n elastic-cluster`
+password : vzp20028y7Ku7g9uqYJpim85
 
 
